@@ -32,14 +32,14 @@ public class Utils {
         TrackerClient trackerClient = new TrackerClient();
         StorageClient1 client = null;
         try {
-            TrackerServer trackerServer = trackerClient.getConnection();
+            TrackerServer trackerServer = trackerClient.getTrackerServer();
             StorageServer storeStorage = trackerClient.getStoreStorage(trackerServer);
             client = new StorageClient1(trackerServer, storeStorage);
-        } catch (IOException e) {
+        } catch (IOException | MyException e) {
             e.printStackTrace();
         }
         if (client != null) {
-            String fileExtName = fileName.substring(fileName.lastIndexOf(".")+1);
+            String fileExtName = fileName.substring(fileName.lastIndexOf(".") + 1);
             try {
                 fileId = client.upload_file1(fileBytes, fileExtName, getMateValuePairs(fileBytes, fileName, fileExtName));
             } catch (IOException e) {
